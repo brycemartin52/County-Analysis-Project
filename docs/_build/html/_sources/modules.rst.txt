@@ -1,8 +1,21 @@
-Stat-386-Package
-================
+modules package
+===============
 
-.. toctree::
-   :maxdepth: 4
+Submodules
+----------
 
-   main-package
-   setup
+modules.module1 module
+----------------------
+
+.. automodule:: modules.module1
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: modules
+   :members:
+   :undoc-members:
+   :show-inheritance:
