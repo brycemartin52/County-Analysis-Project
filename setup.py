@@ -16,7 +16,6 @@ setup(
         'urllib3',
         'statsmodels',
         'seaborn',
-        'json',
         'plotly',
         'matplotlib'
     ],
