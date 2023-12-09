@@ -4,7 +4,12 @@ modules package
 Submodules
 ----------
 
-modules.module1 module
+module1
+clean module
+EDA module
+merge_data
+plotting
+
 ----------------------
 
 .. automodule:: modules.module1
