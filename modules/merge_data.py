@@ -1,10 +1,10 @@
 def MakeDF():
     ## Import the necessary packages
-    import pandas as pd
-    import numpy as np
-    from bs4 import BeautifulSoup
-    import requests
-    import re
+#    import pandas as pd
+#    import numpy as np
+#    from bs4 import BeautifulSoup
+#    import requests
+#    import re
 
     # Read the education data
     edu = pd.read_excel("../Data/Education.xlsx", header=3)

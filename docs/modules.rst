@@ -4,11 +4,11 @@ modules package
 Submodules
 ----------
 
-module1
 clean module
 EDA module
-merge_data
-plotting
+merge_data module
+plotting module
+prediction module
 
 ----------------------
 
