@@ -17,7 +17,8 @@ Welcome to Stat-386-Package's documentation!
 
    
    my_markdown
-   modules
+   clean
+   EDA
    
 
 

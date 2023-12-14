@@ -1,14 +1,23 @@
+"""
+This script generates interactive maps of 
+different types to visualize county data
+"""
+
+
 ## Import the necessary packages
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
-from urllib.request import urlopen
 import json
+import pkg_resources
+from urllib.request import urlopen
 
 # Read the csv
 data = pd.read_csv("../Data/countyVLivEdu.csv")
+
+# pkg_resources... ('modules', '../Data/cou...')
 
 
 def plurality(row):

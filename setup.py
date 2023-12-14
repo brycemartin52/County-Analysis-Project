@@ -17,7 +17,8 @@ setup(
         'statsmodels',
         'seaborn',
         'plotly',
-        'matplotlib'
+        'matplotlib',
+        'pkg_resources'
     ],
 )
 
