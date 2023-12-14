@@ -1,6 +1,6 @@
 """
 Merge the education, kaggle, and county dataframes.
-Must be run after 'clean_county.py'.
+Must be run after 'clean_data.py'.
 """
 
 

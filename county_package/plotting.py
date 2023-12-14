@@ -1,6 +1,6 @@
 """
 Creates the different map and scatterplot visualizations to aid in analysis.
-Note: must be run after 'clean_county.py' and 'merge_data.py'
+Note: must be run after 'clean_data.py' and 'merge_data.py'
 """
 
 

@@ -1,6 +1,6 @@
 """
 Does a basic analysis on the combined data frame.
-Note: must be run after 'clean_county.py' & 'merge_data.py'
+Note: must be run after 'clean_data.py' & 'merge_data.py'
 """
 
 if __name__ == "__main__":
