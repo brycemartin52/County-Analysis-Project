@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>modules.EDA &mdash; Stat-386-Package 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Stat-386-Package
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../my_markdown.html">This is a Header</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">modules package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Stat-386-Package</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">modules.EDA</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for modules.EDA</h1><div class="highlight"><pre>
+<span></span><span class="c1">## Import the necessary packages</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="c1"># Read the csv</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../Data/countyVLivEdu.csv&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="plurality">
+<a class="viewcode-back" href="../../modules.html#modules.EDA.plurality">[docs]</a>
+<span class="k">def</span> <span class="nf">plurality</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plurality documentation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Calculate percentage for each column</span>
+    <span class="n">percentages</span> <span class="o">=</span> <span class="n">row</span> <span class="o">/</span> <span class="n">row</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="c1"># Get the party with the highest percentage</span>
+    <span class="k">return</span> <span class="n">percentages</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># Create a new column containing the most voted party for each row</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;most_voted_party&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span>
+    <span class="p">[</span><span class="s2">&quot;REPUBLICAN&quot;</span><span class="p">,</span> <span class="s2">&quot;DEMOCRAT&quot;</span><span class="p">,</span> <span class="s2">&quot;LIBERTARIAN&quot;</span><span class="p">,</span> <span class="s2">&quot;GREEN&quot;</span><span class="p">,</span> <span class="s2">&quot;OTHER&quot;</span><span class="p">]</span>
+<span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">plurality</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;common_education&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;noHS&quot;</span><span class="p">,</span> <span class="s2">&quot;HS&quot;</span><span class="p">,</span> <span class="s2">&quot;someCol&quot;</span><span class="p">,</span> <span class="s2">&quot;Col&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+    <span class="n">plurality</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="c1"># Display the updated DataFrame</span>
+<span class="n">data</span><span class="p">[[</span><span class="s2">&quot;noHS&quot;</span><span class="p">,</span> <span class="s2">&quot;HS&quot;</span><span class="p">,</span> <span class="s2">&quot;someCol&quot;</span><span class="p">,</span> <span class="s2">&quot;Col&quot;</span><span class="p">,</span> <span class="s2">&quot;common_education&quot;</span><span class="p">]]</span>
+
+
+<span class="c1"># data[data[&#39;common_education&#39;] == &#39;noHS&#39;]</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;most_voted_party&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;common_education&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="c1"># data</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;total_cost&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;median_family_income&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;REPUBLICAN&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;DEMOCRAT&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;noHS&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;HS&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;someCol&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;Col&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;county&quot;</span><span class="p">,</span> <span class="s2">&quot;state_x&quot;</span><span class="p">])[</span><span class="s2">&quot;total_cost&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;county&quot;</span><span class="p">,</span> <span class="s2">&quot;state_x&quot;</span><span class="p">])[</span><span class="s2">&quot;median_family_income&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+    <span class="n">hue</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;county&quot;</span><span class="p">,</span> <span class="s2">&quot;state_x&quot;</span><span class="p">])[</span><span class="s2">&quot;common_education&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">first</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../Images/incomeVSeducation.png&quot;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;county&quot;</span><span class="p">,</span> <span class="s2">&quot;state_x&quot;</span><span class="p">])[</span><span class="s2">&quot;total_cost&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;county&quot;</span><span class="p">,</span> <span class="s2">&quot;state_x&quot;</span><span class="p">])[</span><span class="s2">&quot;median_family_income&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+    <span class="n">hue</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;county&quot;</span><span class="p">,</span> <span class="s2">&quot;state_x&quot;</span><span class="p">])[</span><span class="s2">&quot;most_voted_party&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">first</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../Images/incomeVSvoting.png&quot;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;total_cost&quot;</span><span class="p">],</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;median_family_income&quot;</span><span class="p">],</span>
+    <span class="n">hue</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;family_member_count&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../Images/incomeVSfamilySize.png&quot;</span><span class="p">)</span>
+
+
+<span class="n">data_piv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;county&quot;</span><span class="p">,</span> <span class="s2">&quot;state_y&quot;</span><span class="p">,</span> <span class="s2">&quot;median_family_income&quot;</span><span class="p">],</span>
+    <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;family_member_count&quot;</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;total_cost&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="n">data_piv</span> <span class="o">=</span> <span class="n">data_piv</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">data_piv</span><span class="p">[</span><span class="s2">&quot;median_family_cost&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span>
+    <span class="n">data_piv</span><span class="p">[</span>
+        <span class="p">[</span><span class="s2">&quot;1p0c&quot;</span><span class="p">,</span> <span class="s2">&quot;1p1c&quot;</span><span class="p">,</span> <span class="s2">&quot;1p2c&quot;</span><span class="p">,</span> <span class="s2">&quot;1p3c&quot;</span><span class="p">,</span> <span class="s2">&quot;1p4c&quot;</span><span class="p">,</span> <span class="s2">&quot;2p0c&quot;</span><span class="p">,</span> <span class="s2">&quot;2p1c&quot;</span><span class="p">,</span> <span class="s2">&quot;2p2c&quot;</span><span class="p">,</span> <span class="s2">&quot;2p3c&quot;</span><span class="p">,</span> <span class="s2">&quot;2p4c&quot;</span><span class="p">]</span>
+    <span class="p">],</span>
+    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">data_piv</span><span class="p">[</span><span class="s2">&quot;income_cost_diff&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_piv</span><span class="p">[</span><span class="s2">&quot;median_family_income&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">data_piv</span><span class="p">[</span><span class="s2">&quot;2p1c&quot;</span><span class="p">]</span>
+
+<span class="n">fips_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../Data/viz_data.csv&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;county_fips&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">})</span>
+<span class="n">fips_df</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">fips_df</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<span class="n">data_piv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">data_piv</span><span class="p">,</span>
+    <span class="n">fips_df</span><span class="p">,</span>
+    <span class="n">left_on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;county&quot;</span><span class="p">,</span> <span class="s2">&quot;state_y&quot;</span><span class="p">],</span>
+    <span class="n">right_on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;county_name&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">],</span>
+    <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">data_piv</span>
+
+
+<span class="n">housing_piv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;county&quot;</span><span class="p">,</span> <span class="s2">&quot;state_y&quot;</span><span class="p">,</span> <span class="s2">&quot;median_family_income&quot;</span><span class="p">],</span>
+    <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;family_member_count&quot;</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;housing_cost&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="n">housing_piv</span> <span class="o">=</span> <span class="n">housing_piv</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">housing_piv</span><span class="p">[</span><span class="s2">&quot;median_family_cost&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span>
+    <span class="n">housing_piv</span><span class="p">[</span>
+        <span class="p">[</span><span class="s2">&quot;1p0c&quot;</span><span class="p">,</span> <span class="s2">&quot;1p1c&quot;</span><span class="p">,</span> <span class="s2">&quot;1p2c&quot;</span><span class="p">,</span> <span class="s2">&quot;1p3c&quot;</span><span class="p">,</span> <span class="s2">&quot;1p4c&quot;</span><span class="p">,</span> <span class="s2">&quot;2p0c&quot;</span><span class="p">,</span> <span class="s2">&quot;2p1c&quot;</span><span class="p">,</span> <span class="s2">&quot;2p2c&quot;</span><span class="p">,</span> <span class="s2">&quot;2p3c&quot;</span><span class="p">,</span> <span class="s2">&quot;2p4c&quot;</span><span class="p">]</span>
+    <span class="p">],</span>
+    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">housing_piv</span><span class="p">[</span><span class="s2">&quot;income_cost_diff&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">housing_piv</span><span class="p">[</span><span class="s2">&quot;median_family_income&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">housing_piv</span><span class="p">[</span><span class="s2">&quot;2p1c&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">fips_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../Data/viz_data.csv&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;county_fips&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">})</span>
+<span class="n">fips_df</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">fips_df</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<span class="n">housing_piv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">housing_piv</span><span class="p">,</span>
+    <span class="n">fips_df</span><span class="p">,</span>
+    <span class="n">left_on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;county&quot;</span><span class="p">,</span> <span class="s2">&quot;state_y&quot;</span><span class="p">],</span>
+    <span class="n">right_on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;county_name&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">],</span>
+    <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">housing_piv</span>
+
+<span class="k">with</span> <span class="n">urlopen</span><span class="p">(</span>
+    <span class="s2">&quot;https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json&quot;</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+    <span class="n">counties</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+<span class="c1">### Graph data on a map</span>
+<span class="n">income</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span>
+    <span class="n">data_piv</span><span class="p">,</span>
+    <span class="n">geojson</span><span class="o">=</span><span class="n">counties</span><span class="p">,</span>
+    <span class="n">locations</span><span class="o">=</span><span class="s2">&quot;county_fips&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;median_family_income&quot;</span><span class="p">,</span>
+    <span class="n">color_continuous_scale</span><span class="o">=</span><span class="s2">&quot;balance&quot;</span><span class="p">,</span>
+    <span class="n">range_color</span><span class="o">=</span><span class="p">(</span><span class="mi">30000</span><span class="p">,</span> <span class="mi">100000</span><span class="p">),</span>
+    <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;usa&quot;</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;median_family_income&quot;</span><span class="p">:</span> <span class="s2">&quot;Median Income&quot;</span><span class="p">},</span>
+<span class="p">)</span>
+<span class="n">income</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+<span class="n">income</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1">### Graph data on a map</span>
+<span class="n">cost</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span>
+    <span class="n">data_piv</span><span class="p">,</span>
+    <span class="n">geojson</span><span class="o">=</span><span class="n">counties</span><span class="p">,</span>
+    <span class="n">locations</span><span class="o">=</span><span class="s2">&quot;county_fips&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;2p1c&quot;</span><span class="p">,</span>
+    <span class="n">color_continuous_scale</span><span class="o">=</span><span class="s2">&quot;balance&quot;</span><span class="p">,</span>
+    <span class="n">range_color</span><span class="o">=</span><span class="p">(</span><span class="mi">30000</span><span class="p">,</span> <span class="mi">100000</span><span class="p">),</span>
+    <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;usa&quot;</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;2p1c&quot;</span><span class="p">:</span> <span class="s2">&quot;2p1c Cost&quot;</span><span class="p">},</span>
+<span class="p">)</span>
+<span class="n">cost</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+<span class="n">cost</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1">### Graph data on a map</span>
+<span class="n">diff</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span>
+    <span class="n">data_piv</span><span class="p">,</span>
+    <span class="n">geojson</span><span class="o">=</span><span class="n">counties</span><span class="p">,</span>
+    <span class="n">locations</span><span class="o">=</span><span class="s2">&quot;county_fips&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;income_cost_diff&quot;</span><span class="p">,</span>
+    <span class="n">color_continuous_scale</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span>
+    <span class="n">range_color</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">55000</span><span class="p">,</span> <span class="mi">55000</span><span class="p">),</span>
+    <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;usa&quot;</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;income_cost_diff&quot;</span><span class="p">:</span> <span class="s2">&quot;Median income - cost&quot;</span><span class="p">},</span>
+<span class="p">)</span>
+<span class="n">diff</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+<span class="n">diff</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Michael Miceli &amp; Bryce Martin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

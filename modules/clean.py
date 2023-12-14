@@ -1,3 +1,7 @@
+"""
+This cleans up the voting data
+"""
+
 ## Import the necessary packages
 import pandas as pd
 
