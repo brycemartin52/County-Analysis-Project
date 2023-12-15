@@ -3,8 +3,6 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-   #Under 'my_markdown' we'll add the module names
-
 Welcome to County Package's documentation!
 ============================================
 
