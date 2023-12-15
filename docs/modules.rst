@@ -11,3 +11,11 @@ county_package.plotting module
    :members:
    :undoc-members:
    :show-inheritance:
+
+county_package.EDA module
+------------------
+
+.. automodule:: county_package.EDA
+   :members:
+   :undoc-members:
+   :show-inheritance:

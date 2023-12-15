@@ -5,7 +5,7 @@
 
    #Under 'my_markdown' we'll add the module names
 
-Welcome to Stat-386-Package's documentation!
+Welcome to County Package's documentation!
 ============================================
 
 .. include:: ../README.md
@@ -17,8 +17,7 @@ Welcome to Stat-386-Package's documentation!
 
    
    my_markdown
-   clean
-   EDA
+   modules
    
 
 
