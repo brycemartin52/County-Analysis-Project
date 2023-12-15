@@ -2,20 +2,18 @@
 This script generates interactive maps of 
 different types to visualize county data
 """
+if __name__ == "__main__":
 
+    ## Import the necessary packages
+    import pandas as pd
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import plotly.express as px
+    import json
+    # import pkg_resources
+    from urllib.request import urlopen
 
-## Import the necessary packages
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import numpy as np
-import plotly.express as px
-import json
-# import pkg_resources
-from urllib.request import urlopen
-
-
-if __name__ == '__main__':
     # Reading in necessary dataframes
     with urlopen(
         "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json"
@@ -24,7 +22,7 @@ if __name__ == '__main__':
 
     unemployment = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv", dtype={"fips": str})
 
-    fips_df = pd.read_csv("../Data/viz_data.csv", dtype={"county_fips": str})
+    fips_df = pd.read_csv("../Data/vcounty.csv", dtype={"county_fips": str})
 
     # Tidying portion of clean_data.py
     # Read the csv
@@ -67,8 +65,6 @@ if __name__ == '__main__':
         }
     )
 
-
-
     #scatterplot graphs
     sns.scatterplot(
         x=data.groupby(["county", "state_x"])["total_cost"].mean(),
@@ -92,9 +88,6 @@ if __name__ == '__main__':
     plt.savefig("../Images/incomeVSfamilySize.png")
 
 
-
-
-
     cost_piv = pd.pivot_table(
         data,
         index=["county", "state_y", "median_family_income"],
@@ -103,6 +96,7 @@ if __name__ == '__main__':
     )
 
     cost_piv = cost_piv.droplevel(0, axis=1).reset_index()
+
     cost_piv["median_family_cost"] = np.median(
         cost_piv[
             ["1p0c", "1p1c", "1p2c", "1p3c", "1p4c", "2p0c", "2p1c", "2p2c", "2p3c", "2p4c"]
@@ -112,8 +106,9 @@ if __name__ == '__main__':
 
     cost_piv["income_cost_diff"] = cost_piv["median_family_income"] - cost_piv["2p1c"]
 
-    
-    fips_df.state = fips_df.state.str.upper()
+    fips_df.state = fips_df.state.str.title()
+
+
     cost_piv = pd.merge(
         cost_piv,
         fips_df,
@@ -121,8 +116,6 @@ if __name__ == '__main__':
         right_on=["county_name", "state"],
         how="inner",
     )
-    cost_piv
-
 
     housing_piv = pd.pivot_table(
         data,
@@ -143,8 +136,8 @@ if __name__ == '__main__':
         housing_piv["median_family_income"] - housing_piv["2p1c"]
     )
 
-    
     fips_df.state = fips_df.state.str.upper()
+
     housing_piv = pd.merge(
         housing_piv,
         fips_df,
@@ -152,7 +145,7 @@ if __name__ == '__main__':
         right_on=["county_name", "state"],
         how="inner",
     )
-    housing_piv
+
 
     ### Graph data on a map
     income = px.choropleth(
@@ -169,6 +162,7 @@ if __name__ == '__main__':
     income.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     income.show()
 
+
     ### Graph data on a map
     cost = px.choropleth(
         cost_piv,
@@ -183,6 +177,7 @@ if __name__ == '__main__':
     )
     cost.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     cost.show()
+
 
     ### Graph data on a map
     diff = px.choropleth(
@@ -200,7 +195,6 @@ if __name__ == '__main__':
     diff.show()
 
 
-
     voting_fig = px.choropleth(
         fips_df,
         geojson=counties,
@@ -214,6 +208,7 @@ if __name__ == '__main__':
     )
     voting_fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     voting_fig.show()
+
 
     fig2 = px.choropleth(
         fips_df,
@@ -231,12 +226,9 @@ if __name__ == '__main__':
 
 
 
-
-
     unemp_chart = px.choropleth(unemployment, geojson=counties, locations='fips', color='unemp',
                             color_continuous_scale="Viridis",
                             range_color=(0, 12),
-                            hover_data=["state", "county_name"],
                             scope="usa",
                             labels={'unemp':'% Unemployment'}
                             )
