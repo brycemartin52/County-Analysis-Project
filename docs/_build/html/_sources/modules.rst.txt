@@ -1,53 +1,21 @@
-modules package
+county_package package
 ===============
 
 Submodules
 ----------
 
-modules.EDA module
+county_package.plotting module
 ------------------
 
-.. automodule:: modules.EDA
+.. automodule:: county_package.plotting
    :members:
    :undoc-members:
    :show-inheritance:
 
-modules.clean module
---------------------
+county_package.EDA module
+------------------
 
-.. automodule:: modules.clean
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-modules.merge\_data module
---------------------------
-
-.. automodule:: modules.merge_data
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-modules.plotting module
------------------------
-
-.. automodule:: modules.plotting
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-modules.prediction module
--------------------------
-
-.. automodule:: modules.prediction
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: modules
+.. automodule:: county_package.EDA
    :members:
    :undoc-members:
    :show-inheritance:

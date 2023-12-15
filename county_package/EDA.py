@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
 import json
-import pkg_resources
+# import pkg_resources
 from urllib.request import urlopen
 
 # Read the csv
