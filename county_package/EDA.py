@@ -155,6 +155,7 @@ if __name__ == '__main__':
         locations="county_fips",
         color="median_family_income",
         color_continuous_scale="balance",
+        hover_data=["state", "county_name"],
         range_color=(30000, 100000),
         scope="usa",
         labels={"median_family_income": "Median Income"},
@@ -169,6 +170,7 @@ if __name__ == '__main__':
         locations="county_fips",
         color="2p1c",
         color_continuous_scale="balance",
+        hover_data=["state", "county_name"],
         range_color=(30000, 100000),
         scope="usa",
         labels={"2p1c": "2p1c Cost"},
@@ -183,6 +185,7 @@ if __name__ == '__main__':
         locations="county_fips",
         color="income_cost_diff",
         color_continuous_scale="RdBu",
+        hover_data=["state", "county_name"],
         range_color=(-55000, 55000),
         scope="usa",
         labels={"income_cost_diff": "Median income - cost"},
@@ -203,6 +206,7 @@ if __name__ == '__main__':
         locations="county_fips",
         color="REPUBLICAN",
         color_continuous_scale="balance",
+        hover_data=["state", "county_name"],
         range_color=(0, 1),
         scope="usa",
         labels={"Republican": "% Republican"},
@@ -217,7 +221,7 @@ if __name__ == '__main__':
         color="totalvotes",
         color_continuous_scale="Viridis",
         hover_data=["state", "county_name"],
-        range_color=(0, 50000),
+        range_color=(0, 100000),
         scope="usa",
         labels={"totalvotes": "Voting population"},
     )
@@ -230,6 +234,7 @@ if __name__ == '__main__':
     unemp_chart = px.choropleth(unemployment, geojson=counties, locations='fips', color='unemp',
                             color_continuous_scale="Viridis",
                             range_color=(0, 12),
+                            hover_data=["state", "county_name"],
                             scope="usa",
                             labels={'unemp':'% Unemployment'}
                             )
