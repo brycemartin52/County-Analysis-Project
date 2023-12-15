@@ -9,8 +9,8 @@ if __name__ == "__main__":
     # Reading the data into dataframes
     vote = pd.read_csv("../Data/countypres_2000-2020.csv")
     cost = pd.read_csv("../Data/cost_of_living_us.csv")
+
     vote = vote[vote.year == 2020]
-    vote
 
     # Creating the voting groupby object
     vote = (
@@ -21,9 +21,6 @@ if __name__ == "__main__":
         .reset_index()
     )
 
-
-    vote.party.unique()
-    # There's not so many parties that we can't reduce the row count by combining the parties onto one county
 
     vcounty = pd.pivot_table(
         vote,

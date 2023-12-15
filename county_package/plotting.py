@@ -38,7 +38,7 @@ fig2 = px.choropleth(
     hover_data=["state", "county_name"],
     range_color=(0, 50000),
     scope="usa",
-    labels={"totalvotes": "% Voting population"},
+    labels={"totalvotes": "Voting population"},
 )
 fig2.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 fig2.show()
