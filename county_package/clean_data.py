@@ -4,6 +4,7 @@ This script  cleans up the county voting, education, and cost of living data set
 
 ## Import the necessary packages
 import pandas as pd
+import numpy as np
 
 # Reading the data into dataframes
 vote = pd.read_csv("../Data/countypres_2000-2020.csv")
@@ -113,7 +114,14 @@ final = pd.merge(
     right_on=["Abv", "county_name"],
     how="inner",
 )
-#final.info()
+
+
+
+
+
+
 
 # Write the final csv
 final.to_csv("../Data/countyVLivEdu.csv")
+# cost_piv.to_csv("../Data/cost_piv.csv")
+# housing_piv.to_csv("../Data/housing_piv.csv")
