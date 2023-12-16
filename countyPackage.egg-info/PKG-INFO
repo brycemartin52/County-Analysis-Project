@@ -1,0 +1,18 @@
+Metadata-Version: 2.1
+Name: countyPackage
+Version: 0.0.1
+Summary: A package to aid county-level analysis on cost of living, voting, and other variables
+Home-page: https://github.com/brycemartin52/county_package.git
+Author: Michael Miceli & Bryce Martin
+License-File: LICENSE
+Requires-Dist: alabaster
+Requires-Dist: beautifulsoup4
+Requires-Dist: pandas
+Requires-Dist: numpy
+Requires-Dist: uszipcode
+Requires-Dist: urllib3
+Requires-Dist: statsmodels
+Requires-Dist: seaborn
+Requires-Dist: plotly
+Requires-Dist: matplotlib
+Requires-Dist: pkg_resources
