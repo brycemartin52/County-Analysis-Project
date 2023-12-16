@@ -170,7 +170,35 @@ def income_map():
 
 
 ### Graph data on a map
-def cost_map():
+def cost_map(final):
+    cost_piv = pd.pivot_table(
+        final,
+        index=["county", "state_y", "median_family_income"],
+        columns="family_member_count",
+        values=["total_cost"],
+    )
+    cost_piv = cost_piv.droplevel(0, axis=1).reset_index()
+
+    cost_piv["median_family_cost"] = np.median(
+        cost_piv[
+            ["1p0c", "1p1c", "1p2c", "1p3c", "1p4c", "2p0c", "2p1c", "2p2c", "2p3c", "2p4c"]
+        ],
+        axis=1,
+    )
+
+    cost_piv["income_cost_diff"] = cost_piv["median_family_income"] - cost_piv["2p1c"]
+    path_to_df = pkg_resources.resource_filename('countyPackage', '../Data/vcounty.csv')
+    fips_df = pd.read_csv(path_to_df, dtype={"county_fips": str})
+    fips_df.state = fips_df.state.str.title()
+
+    cost_piv = pd.merge(
+        cost_piv,
+        fips_df,
+        left_on=["county", "state_y"],
+        right_on=["county_name", "state"],
+        how="inner",
+    )   
+
     cost = px.choropleth(
         cost_piv,
         geojson=counties,
@@ -184,6 +212,7 @@ def cost_map():
     )
     cost.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     cost.show()
+    plt.savefig("cost_map.png")
 
 
 ### Graph data on a map
