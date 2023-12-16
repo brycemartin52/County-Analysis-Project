@@ -11,9 +11,9 @@ def county():
 
 
     # Reading the data into dataframes
-    path_to_vote = pkg_resources.resource_filename('countyPackage', 'Data/countypres_2000-2020.csv')
+    path_to_vote = pkg_resources.resource_filename('county_package', 'Data/countypres_2000-2020.csv')
     vote = pd.read_csv(path_to_vote)
-    path_to_cost = pkg_resources.resource_filename('countyPackage', 'Data/cost_of_living_us.csv')
+    path_to_cost = pkg_resources.resource_filename('county_package', 'Data/cost_of_living_us.csv')
     
     cost = pd.read_csv(path_to_cost)
 
@@ -65,7 +65,7 @@ def county():
     ]
 
     # State Abbreviation
-    path_to_abs = pkg_resources.resource_filename('countyPackage', "Data/StateAbbvs.csv")
+    path_to_abs = pkg_resources.resource_filename('county_package', "Data/StateAbbvs.csv")
     abs = pd.read_csv(path_to_abs, header=None)
     abs.columns = ["State", "Abv"]
     abs.State = abs.State.str.title()
@@ -96,7 +96,7 @@ def county():
     edu.columns = ["State", "county_name", "noHS", "HS", "someCol", "Col"]
 
     # Read the kaggle data
-    path_to_kag = pkg_resources.resource_filename('countyPackage', "Data/cost_of_living_us.csv")
+    path_to_kag = pkg_resources.resource_filename('county_package', "Data/cost_of_living_us.csv")
     kag = pd.read_csv(path_to_kag)
     #kag
 
