@@ -10,6 +10,7 @@ Documentation is stored here:
 
 Data sources:
 US Cost of Living Dataset (1877 Counties) - Data extracted from the Economic Policy Institute Family Budget Calculator: https://www.kaggle.com/datasets/asaniczka/us-cost-of-living-dataset-3171-counties/data
+
 County Presidential Election Returns 2000-2020 - MIT Election Data and Science Lab, 2018, "County Presidential Election Returns 2000-2020": https://doi.org/10.7910/DVN/VOQCHQ='
 
 Education Site used for data:
