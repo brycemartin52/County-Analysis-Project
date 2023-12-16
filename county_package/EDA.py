@@ -22,9 +22,14 @@ with urlopen(
 
 unemployment = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv", dtype={"fips": str})
 
+<<<<<<< HEAD
 path_to_df = "./Data/vcounty.csv"
 # path_to_df = pkg_resources.resource_filename('county_package', 'Data/vcounty.csv')
 fips_df = pd.read_csv(path_to_df, dtype={"county_fips": str})
+=======
+#path_to_df = pkg_resources.resource_filename('countyPackage', 'Data/vcounty.csv')
+fips_df = pd.read_csv('Data/vcounty.csv', dtype={"county_fips": str})
+>>>>>>> 409988c33d0584e0a86480e1204ecc1e099f22c8
 
 
 # Tidying portion of clean_data.py
