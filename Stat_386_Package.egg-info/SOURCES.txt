@@ -1,0 +1,13 @@
+LICENSE
+README.md
+setup.py
+Stat_386_Package.egg-info/PKG-INFO
+Stat_386_Package.egg-info/SOURCES.txt
+Stat_386_Package.egg-info/dependency_links.txt
+Stat_386_Package.egg-info/requires.txt
+Stat_386_Package.egg-info/top_level.txt
+county_package/EDA.py
+county_package/__init__.py
+county_package/clean_data.py
+county_package/plotting.py
+county_package/prediction.py
