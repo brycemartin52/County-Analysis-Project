@@ -285,3 +285,6 @@ def unemployement_map():
                             )
     unemp_chart.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     unemp_chart.show()
+
+
+cost_map(final)

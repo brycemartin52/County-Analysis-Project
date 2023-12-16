@@ -65,8 +65,8 @@ def county():
     ]
 
     # State Abbreviation
-    #path_to_abs = pkg_resources.resource_filename('county_package', "Data/StateAbbvs.csv")
-    abs = pd.read_csv("Data/StateAbbvs.csv", header=None)
+    path_to_abs = pkg_resources.resource_filename('county_package', "Data/StateAbbvs.csv")
+    abs = pd.read_csv(path_to_abs, header=None)
     abs.columns = ["State", "Abv"]
     abs.State = abs.State.str.title()
 
@@ -96,8 +96,8 @@ def county():
     edu.columns = ["State", "county_name", "noHS", "HS", "someCol", "Col"]
 
     # Read the kaggle data
-    #path_to_kag = pkg_resources.resource_filename('county_package', "Data/cost_of_living_us.csv")
-    kag = pd.read_csv("Data/cost_of_living_us.csv")
+    path_to_kag = pkg_resources.resource_filename('county_package', "Data/cost_of_living_us.csv")
+    kag = pd.read_csv(path_to_kag)
     #kag
 
     # Merge the data
