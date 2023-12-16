@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="county",
+    name="county_package",
     version='0.0.1',
     packages=find_packages(),
     description="A package to aid county-level analysis on cost of living, voting, and other variables",
