@@ -6,16 +6,20 @@ if __name__ == "__main__":
     ## Import the necessary packages
     import pandas as pd
     import numpy as np
+    import pkg_resources
     def county():
 
 
-    # Reading the data into dataframes
-        vote = pd.read_csv("../Data/countypres_2000-2020.csv")
-        cost = pd.read_csv("../Data/cost_of_living_us.csv")
+        # Reading the data into dataframes
+        path_to_vote = pkg_resources.resource_filename('County-Analysis-Project', '../Data/countypres_2000-2020.csv')
+        vote = pd.read_csv(path_to_vote)
+        path_to_cost = pkg_resources.resource_filename('County-Analysis-Project', '../Data/cost_of_living_us.csv')
+        
+        cost = pd.read_csv(path_to_cost)
 
         vote = vote[vote.year == 2020]
 
-    # Creating the voting groupby object
+        # Creating the voting groupby object
         vote = (
         vote.groupby(
                 ["year", "state", "county_name", "county_fips", "party", "totalvotes"]
@@ -61,7 +65,8 @@ if __name__ == "__main__":
         ]
 
         # State Abbreviation
-        abs = pd.read_csv("../Data/StateAbbvs.csv", header=None)
+        path_to_abs = pkg_resources.resource_filename('County-Analysis-Project', '../Data/StateAbbvs.csv')
+        abs = pd.read_csv(path_to_abs, header=None)
         abs.columns = ["State", "Abv"]
         abs.State = abs.State.str.title()
 
@@ -74,7 +79,9 @@ if __name__ == "__main__":
 
         vcounty.to_csv("../Data/vcounty.csv")
 
-        edu = pd.read_excel("../Data/Education.xlsx", header=3)
+        path_to_edu = pkg_resources.resource_filename('County-Analysis-Project', '../Data/Education.xlsx')
+        
+        edu = pd.read_excel(path_to_edu, header=3)
 
         edu = edu[edu["State"] != "PR"]
 
@@ -89,9 +96,10 @@ if __name__ == "__main__":
             ]
         ]
         edu.columns = ["State", "county_name", "noHS", "HS", "someCol", "Col"]
-
+        
+        path_to_kag = pkg_resources.resource_filename('County-Analysis-Project', '../Data/cost_of_living_us.csv')
         # Read the kaggle data
-        kag = pd.read_csv("../Data/cost_of_living_us.csv")
+        kag = pd.read_csv(path_to_kag)
         #kag
 
         # Merge the data
@@ -119,6 +127,7 @@ if __name__ == "__main__":
         
 
         # Write the final csv
-        final.to_csv("../Data/countyVLivEdu.csv")
-    # cost_piv.to_csv("../Data/cost_piv.csv")
-    # housing_piv.to_csv("../Data/housing_piv.csv")
+        #final.to_csv("../Data/countyVLivEdu.csv")
+        return final
+        # cost_piv.to_csv("../Data/cost_piv.csv")
+        # housing_piv.to_csv("../Data/housing_piv.csv")
