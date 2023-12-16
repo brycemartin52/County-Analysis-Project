@@ -11,9 +11,9 @@ if __name__ == "__main__":
 
 
         # Reading the data into dataframes
-        path_to_vote = pkg_resources.resource_filename('County-Analysis-Project', '../Data/countypres_2000-2020.csv')
+        path_to_vote = pkg_resources.resource_filename('county_package', '../Data/countypres_2000-2020.csv')
         vote = pd.read_csv(path_to_vote)
-        path_to_cost = pkg_resources.resource_filename('County-Analysis-Project', '../Data/cost_of_living_us.csv')
+        path_to_cost = pkg_resources.resource_filename('county_package', '../Data/cost_of_living_us.csv')
         
         cost = pd.read_csv(path_to_cost)
 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
         ]
 
         # State Abbreviation
-        path_to_abs = pkg_resources.resource_filename('County-Analysis-Project', '../Data/StateAbbvs.csv')
+        path_to_abs = pkg_resources.resource_filename('county_package', '../Data/StateAbbvs.csv')
         abs = pd.read_csv(path_to_abs, header=None)
         abs.columns = ["State", "Abv"]
         abs.State = abs.State.str.title()
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 
         vcounty.to_csv("../Data/vcounty.csv")
 
-        path_to_edu = pkg_resources.resource_filename('County-Analysis-Project', '../Data/Education.xlsx')
+        path_to_edu = pkg_resources.resource_filename('county_package', '../Data/Education.xlsx')
         
         edu = pd.read_excel(path_to_edu, header=3)
 
@@ -97,7 +97,7 @@ if __name__ == "__main__":
         ]
         edu.columns = ["State", "county_name", "noHS", "HS", "someCol", "Col"]
         
-        path_to_kag = pkg_resources.resource_filename('County-Analysis-Project', '../Data/cost_of_living_us.csv')
+        path_to_kag = pkg_resources.resource_filename('county_package', '../Data/cost_of_living_us.csv')
         # Read the kaggle data
         kag = pd.read_csv(path_to_kag)
         #kag

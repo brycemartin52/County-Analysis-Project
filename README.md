@@ -3,8 +3,7 @@ This package is meant to aid those intending to do any sort of analysis of cost 
 
 This repository contains the data used in analysis, images produced, and the models to clean/merge the data, plot the data, and perform a basic prediction on the variables provided.
 
-Install in the terminal with: pip install git+https://github.com/brycemartin52/county_package
-
+Install in the terminal with: pip install git+https://github.com/brycemartin52/county_package.git
 
 Documentation is stored here:
 #####
