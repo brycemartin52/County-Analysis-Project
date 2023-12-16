@@ -127,7 +127,7 @@ if __name__ == "__main__":
         
 
         # Write the final csv
-        #final.to_csv("../Data/countyVLivEdu.csv")
+        final.to_csv("../Data/countyVLivEdu.csv")
         return final
         # cost_piv.to_csv("../Data/cost_piv.csv")
         # housing_piv.to_csv("../Data/housing_piv.csv")
