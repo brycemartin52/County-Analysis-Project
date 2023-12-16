@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="countyPackage",
-    version='0.0.1',
+    version='0.0.2',
     packages=find_packages(),
     description="A package to aid county-level analysis on cost of living, voting, and other variables",
     author="Michael Miceli & Bryce Martin",
@@ -17,8 +17,7 @@ setup(
         'statsmodels',
         'seaborn',
         'plotly',
-        'matplotlib',
-        'pkg_resources'
+        'matplotlib'
     ],
 )
 
