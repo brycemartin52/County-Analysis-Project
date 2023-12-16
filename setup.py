@@ -18,7 +18,7 @@ setup(
         'seaborn',
         'plotly',
         'matplotlib',
-        'pkg_resources'
+        'setuptools'
     ],
 )
 
