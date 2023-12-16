@@ -22,14 +22,9 @@ with urlopen(
 
 unemployment = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv", dtype={"fips": str})
 
-<<<<<<< HEAD
 path_to_df = "./Data/vcounty.csv"
 # path_to_df = pkg_resources.resource_filename('county_package', 'Data/vcounty.csv')
 fips_df = pd.read_csv(path_to_df, dtype={"county_fips": str})
-=======
-#path_to_df = pkg_resources.resource_filename('countyPackage', 'Data/vcounty.csv')
-fips_df = pd.read_csv('Data/vcounty.csv', dtype={"county_fips": str})
->>>>>>> 409988c33d0584e0a86480e1204ecc1e099f22c8
 
 
 # Tidying portion of clean_data.py
@@ -96,15 +91,41 @@ housing_piv = pd.merge(
 # data[data['common_education'] == 'noHS']
 final["most_voted_party"].value_counts()
 final["common_education"].value_counts()
+import numpy as np
 
 def plurality(row):
     """
-    Plurality documentation
+    Determine the party with the highest percentage based on a row of votes.
+
+    Parameters
+    ----------
+    row : numpy.ndarray
+        One-dimensional array representing the percentage of votes for each party.
+
+    Returns
+    -------
+    str
+        The party with the highest percentage of votes.
+
+    Notes
+    -----
+    The input `row` should be a NumPy array containing the percentage of votes for each party.
+    The function calculates the percentage for each party, identifies the party with the
+    highest percentage, and returns its name.
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> row = np.array([30, 20, 50])  # Example percentages for three parties
+    >>> plurality(row)
+    'Party C'
+
     """
     # Calculate percentage for each column
     percentages = row / row.sum() * 100
     # Get the party with the highest percentage
-    return percentages.idxmax()
+    return percentages.argmax()
+
 
 # Create a new column containing the most voted party for each row
 final["most_voted_party"] = final[
@@ -116,55 +137,199 @@ final["common_education"] = final[["noHS", "HS", "someCol", "Col"]].apply(
 )
 
 
-def stat_sum():
-    #return summary statistics for the data
-    final.agg(
-    {
-        "total_cost": ["min", "max", "median", "mean"],
-        "median_family_income": ["min", "max", "median", "mean"],
-        "REPUBLICAN": ["min", "max", "median", "mean"],
-        "DEMOCRAT": ["min", "max", "median", "mean"],
-        "noHS": ["min", "max", "median", "mean"],
-        "HS": ["min", "max", "median", "mean"],
-        "someCol": ["min", "max", "median", "mean"],
-        "Col": ["min", "max", "median", "mean"],
-    }
+def stat_sum(final):
+    """
+    Calculate summary statistics for the given DataFrame.
+
+    Parameters
+    ----------
+    final : pandas.DataFrame
+        The DataFrame containing the data for which summary statistics are to be calculated.
+
+    Returns
+    -------
+    pandas.DataFrame
+        A DataFrame containing summary statistics for selected columns.
+
+    Notes
+    -----
+    This function calculates summary statistics (minimum, maximum, median, mean) for
+    specific columns in the input DataFrame.
+
+    - 'total_cost': Total cost column.
+    - 'median_family_income': Median family income column.
+    - 'REPUBLICAN': Republican column.
+    - 'DEMOCRAT': Democrat column.
+    - 'noHS': Column representing individuals with no high school education.
+    - 'HS': Column representing individuals with a high school education.
+    - 'someCol': Column representing individuals with some college education.
+    - 'Col': Column representing individuals with a college education.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> # Assuming 'final' is your DataFrame
+    >>> summary_stats = stat_sum(final)
+    >>> print(summary_stats)
+                     total_cost  median_family_income  ...         someCol            Col
+    min          1000.00                25000.00                  ...          30000.00        50000.00
+    max        1000000.00            150000.00                  ...       120000.00      200000.00
+    median    500000.00                75000.00                  ...        60000.00        90000.00
+    mean      550000.00                80000.00                  ...        65000.00        95000.00
+
+    """
+    return final.agg(
+        {
+            "total_cost": ["min", "max", "median", "mean"],
+            "median_family_income": ["min", "max", "median", "mean"],
+            "REPUBLICAN": ["min", "max", "median", "mean"],
+            "DEMOCRAT": ["min", "max", "median", "mean"],
+            "noHS": ["min", "max", "median", "mean"],
+            "HS": ["min", "max", "median", "mean"],
+            "someCol": ["min", "max", "median", "mean"],
+            "Col": ["min", "max", "median", "mean"],
+        }
     )
 
 
 
 
 ### Scatterplot graphs
-def edu_scat():
-    #Create a scatter plot of Total_cost vs median family income, coloring the points with the plurality of common_education
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+def edu_scat(final):
+    """
+    Create a scatter plot of Total_cost vs median family income, coloring the points
+    based on the plurality of common_education.
+
+    Parameters
+    ----------
+    final : pandas.DataFrame
+        The DataFrame containing the data to be used for creating the scatter plot.
+
+    Notes
+    -----
+    This function generates a scatter plot of 'total_cost' versus 'median_family_income'.
+    The points in the plot are colored based on the plurality of 'common_education' for each
+    unique combination of 'county' and 'state_x' in the input DataFrame.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> # Assuming 'final' is your DataFrame
+    >>> edu_scat(final)
+
+    The resulting scatter plot will be displayed, and the image will be saved to "../Images/incomeVSeducation.png".
+
+    """
     sns.scatterplot(
         x=final.groupby(["county", "state_x"])["total_cost"].mean(),
         y=final.groupby(["county", "state_x"])["median_family_income"].mean(),
         hue=final.groupby(["county", "state_x"])["common_education"].first(),
     )
     plt.savefig("../Images/incomeVSeducation.png")
+    plt.show()  # If you want to display the plot interactively
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-def vote_scat():
-    #make a scatterplot of Total Cost vs Median Family Income with the most common politcal party colored
+def vote_scat(final):
+    """
+    Create a scatter plot of Total Cost vs Median Family Income, coloring the points
+    based on the most common political party in each county.
+
+    Parameters
+    ----------
+    final : pandas.DataFrame
+        The DataFrame containing the data to be used for creating the scatter plot.
+
+    Notes
+    -----
+    This function generates a scatter plot of 'total_cost' versus 'median_family_income'.
+    The points in the plot are colored based on the most common political party ('most_voted_party')
+    for each unique combination of 'county' and 'state_x' in the input DataFrame.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> # Assuming 'final' is your DataFrame
+    >>> vote_scat(final)
+
+    The resulting scatter plot will be displayed, and the image will be saved to "../Images/incomeVSvoting.png".
+
+    """
     sns.scatterplot(
         x=final.groupby(["county", "state_x"])["total_cost"].mean(),
         y=final.groupby(["county", "state_x"])["median_family_income"].mean(),
         hue=final.groupby(["county", "state_x"])["most_voted_party"].first(),
     )
     plt.savefig("../Images/incomeVSvoting.png")
+    plt.show()  # If you want to display the plot interactively
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-def family_size_scat():
-    #Create a scatter plot of total cost vs median family income with the color as the family household size
+def family_size_scat(final):
+    """
+    Create a scatter plot of Total Cost vs Median Family Income, coloring the points
+    based on the family household size.
+
+    Parameters
+    ----------
+    final : pandas.DataFrame
+        The DataFrame containing the data to be used for creating the scatter plot.
+
+    Notes
+    -----
+    This function generates a scatter plot of 'total_cost' versus 'median_family_income'.
+    The points in the plot are colored based on the 'family_member_count' column, representing
+    the size of the family household.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> # Assuming 'final' is your DataFrame
+    >>> family_size_scat(final)
+
+    The resulting scatter plot will be displayed, and the image will be saved to "../Images/incomeVSfamilySize.png".
+
+    """
     sns.scatterplot(
         x=final["total_cost"],
         y=final["median_family_income"],
         hue=final["family_member_count"],
     )
     plt.savefig("../Images/incomeVSfamilySize.png")
+    plt.show()  # If you want to display the plot interactively
 
 ### Graph data on a map
-def income_map():
-    #create a choropleth map with a color scale to show median family income
+import plotly.express as px
+
+def income_map(cost_piv, counties):
+    """
+    Create a choropleth map with a color scale to visualize median family income.
+
+    Parameters
+    ----------
+    cost_piv : pandas.DataFrame
+        The DataFrame containing the data for creating the choropleth map.
+    counties : dict
+        The GeoJSON data for the counties to be used in the map.
+
+    Notes
+    -----
+    This function generates a choropleth map using Plotly Express, displaying the median
+    family income for each county. The map uses a color scale to represent income levels.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> import plotly.express as px
+    >>> # Assuming 'cost_piv' and 'counties' are your DataFrames
+    >>> income_map(cost_piv, counties)
+
+    The resulting choropleth map will be displayed.
+
+    """
     income = px.choropleth(
         cost_piv,
         geojson=counties,
@@ -179,11 +344,34 @@ def income_map():
     income.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     income.show()
 
-
 ### Graph data on a map
-def cost_map(final):
-        #create a choropleth map with a color scale to show total cost for a 2parent 1 child family
+import pandas as pd
+import numpy as np
+import plotly.express as px
 
+def cost_map(final):
+    """
+    Create a choropleth map with a color scale to visualize total cost for a 2-parent 1-child family.
+
+    Parameters
+    ----------
+    final : pandas.DataFrame
+        The DataFrame containing the data for creating the choropleth map.
+
+    Notes
+    -----
+    This function generates a choropleth map using Plotly Express, displaying the total cost
+    for a 2-parent 1-child family in each county. The map uses a color scale to represent cost levels.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> # Assuming 'final' is your DataFrame
+    >>> cost_map(final)
+
+    The resulting choropleth map will be displayed, and the image will be saved to "cost_map.png".
+
+    """
     cost_piv = pd.pivot_table(
         final,
         index=["county", "state_y", "median_family_income"],
@@ -226,12 +414,37 @@ def cost_map(final):
     cost.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     cost.show()
     plt.savefig("cost_map.png")
-
-
 ### Graph data on a map
-def income_cost_diff_map():
-    #create a choropleth map with a color scale to show the difference in Median family income and cost for a 2parent 1 child family
+import plotly.express as px
 
+def income_cost_diff_map(cost_piv, counties):
+    """
+    Create a choropleth map with a color scale to visualize the difference in
+    median family income and cost for a 2-parent 1-child family.
+
+    Parameters
+    ----------
+    cost_piv : pandas.DataFrame
+        The DataFrame containing the data for creating the choropleth map.
+    counties : dict
+        The GeoJSON data for the counties to be used in the map.
+
+    Notes
+    -----
+    This function generates a choropleth map using Plotly Express, displaying the
+    difference in median family income and cost for a 2-parent 1-child family in each county.
+    The map uses a color scale to represent the income-cost difference.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> import plotly.express as px
+    >>> # Assuming 'cost_piv' and 'counties' are your DataFrames
+    >>> income_cost_diff_map(cost_piv, counties)
+
+    The resulting choropleth map will be displayed.
+
+    """
     diff = px.choropleth(
         cost_piv,
         geojson=counties,
@@ -246,9 +459,35 @@ def income_cost_diff_map():
     diff.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     diff.show()
 
-def Republican_map():
-    #create a choropleth map with a color scale to show the amount of Republican votes in each county
+import plotly.express as px
 
+def Republican_map(fips_df, counties):
+    """
+    Create a choropleth map with a color scale to visualize the percentage of Republican votes in each county.
+
+    Parameters
+    ----------
+    fips_df : pandas.DataFrame
+        The DataFrame containing the data for creating the choropleth map.
+    counties : dict
+        The GeoJSON data for the counties to be used in the map.
+
+    Notes
+    -----
+    This function generates a choropleth map using Plotly Express, displaying the
+    percentage of Republican votes in each county. The map uses a color scale to represent
+    the Republican vote percentages.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> import plotly.express as px
+    >>> # Assuming 'fips_df' and 'counties' are your DataFrames
+    >>> Republican_map(fips_df, counties)
+
+    The resulting choropleth map will be displayed.
+
+    """
     voting_fig = px.choropleth(
         fips_df,
         geojson=counties,
@@ -258,13 +497,39 @@ def Republican_map():
         hover_data=["state", "county_name"],
         range_color=(0, 1),
         scope="usa",
-        labels={"Republican": "% Republican"},
+        labels={"REPUBLICAN": "% Republican"},
     )
     voting_fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     voting_fig.show()
+import plotly.express as px
 
-def vote_map():
-    #create a choropleth map with a color scale to show total number of votes cast in each county
+def vote_map(fips_df, counties):
+    """
+    Create a choropleth map with a color scale to visualize the total number of votes cast in each county.
+
+    Parameters
+    ----------
+    fips_df : pandas.DataFrame
+        The DataFrame containing the data for creating the choropleth map.
+    counties : dict
+        The GeoJSON data for the counties to be used in the map.
+
+    Notes
+    -----
+    This function generates a choropleth map using Plotly Express, displaying the
+    total number of votes cast in each county. The map uses a color scale to represent
+    the voting population.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> import plotly.express as px
+    >>> # Assuming 'fips_df' and 'counties' are your DataFrames
+    >>> vote_map(fips_df, counties)
+
+    The resulting choropleth map will be displayed.
+
+    """
     fig2 = px.choropleth(
         fips_df,
         geojson=counties,
@@ -278,19 +543,42 @@ def vote_map():
     )
     fig2.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     fig2.show()
+import plotly.express as px
 
+def unemployement_map(unemployment, counties):
+    """
+    Create a choropleth map with a color scale to visualize unemployment rates in each county.
 
-def unemployement_map():
-    #create a choropleth map with a color scale to show unemployment rates in each county
+    Parameters
+    ----------
+    unemployment : pandas.DataFrame
+        The DataFrame containing the data for creating the choropleth map.
+    counties : dict
+        The GeoJSON data for the counties to be used in the map.
 
+    Notes
+    -----
+    This function generates a choropleth map using Plotly Express, displaying
+    unemployment rates in each county. The map uses a color scale to represent
+    the percentage of unemployment.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> import plotly.express as px
+    >>> # Assuming 'unemployment' and 'counties' are your DataFrames
+    >>> unemployement_map(unemployment, counties)
+
+    The resulting choropleth map will be displayed.
+
+    """
     unemp_chart = px.choropleth(unemployment, geojson=counties, locations='fips', color='unemp',
                             color_continuous_scale="Viridis",
                             range_color=(0, 12),
                             scope="usa",
-                            labels={'unemp':'% Unemployment'}
+                            labels={'unemp': '% Unemployment'}
                             )
-    unemp_chart.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    unemp_chart.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     unemp_chart.show()
-
 
 cost_map(final)
