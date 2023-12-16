@@ -103,7 +103,10 @@ def county():
     merge1.county = merge1.county.str.replace(" Parish", " ")
     merge1.county = merge1.county.str.strip()
 
+<<<<<<< HEAD
     merge1.to_csv("../Data/merge1.csv")
+=======
+>>>>>>> d79bb8d806d6630e4b809114ec682f17c6eaf47f
 
 
     # Final merge

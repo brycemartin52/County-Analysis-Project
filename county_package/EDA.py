@@ -136,7 +136,7 @@ if __name__ == "__main__":
         housing_piv["median_family_income"] - housing_piv["2p1c"]
     )
 
-    fips_df.state = fips_df.state.str.upper()
+    fips_df.state = fips_df.state.str.title()
 
     housing_piv = pd.merge(
         housing_piv,
