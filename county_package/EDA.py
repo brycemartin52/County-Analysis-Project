@@ -22,16 +22,20 @@ with urlopen(
 
 unemployment = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv", dtype={"fips": str})
 
+<<<<<<< HEAD
 path_to_df = "./Data/vcounty.csv"
 # path_to_df = pkg_resources.resource_filename('county_package', 'Data/vcounty.csv')
 fips_df = pd.read_csv(path_to_df, dtype={"county_fips": str})
+=======
+#path_to_df = pkg_resources.resource_filename('countyPackage', 'Data/vcounty.csv')
+fips_df = pd.read_csv('Data/vcounty.csv', dtype={"county_fips": str})
+>>>>>>> 409988c33d0584e0a86480e1204ecc1e099f22c8
 
 
 # Tidying portion of clean_data.py
 # Read the csv
-path_to_final_df = "Data/countyVLivEdu.csv"
-# path_to_final_df = pkg_resources.resource_filename('county_package', "Data/countyVLivEdu.csv")
-final = pd.read_csv(path_to_final_df)
+#path_to_final_df = pkg_resources.resource_filename('countyPackage', "Data/countyVLivEdu.csv")
+final = pd.read_csv("Data/countyVLivEdu.csv")
 
 cost_piv = pd.pivot_table(
     final,
@@ -113,6 +117,7 @@ final["common_education"] = final[["noHS", "HS", "someCol", "Col"]].apply(
 
 
 def stat_sum():
+    #return summary statistics for the data
     final.agg(
     {
         "total_cost": ["min", "max", "median", "mean"],
@@ -131,6 +136,7 @@ def stat_sum():
 
 ### Scatterplot graphs
 def edu_scat():
+    #Create a scatter plot of Total_cost vs median family income, coloring the points with the plurality of common_education
     sns.scatterplot(
         x=final.groupby(["county", "state_x"])["total_cost"].mean(),
         y=final.groupby(["county", "state_x"])["median_family_income"].mean(),
@@ -139,6 +145,7 @@ def edu_scat():
     plt.savefig("../Images/incomeVSeducation.png")
 
 def vote_scat():
+    #make a scatterplot of Total Cost vs Median Family Income with the most common politcal party colored
     sns.scatterplot(
         x=final.groupby(["county", "state_x"])["total_cost"].mean(),
         y=final.groupby(["county", "state_x"])["median_family_income"].mean(),
@@ -147,6 +154,7 @@ def vote_scat():
     plt.savefig("../Images/incomeVSvoting.png")
 
 def family_size_scat():
+    #Create a scatter plot of total cost vs median family income with the color as the family household size
     sns.scatterplot(
         x=final["total_cost"],
         y=final["median_family_income"],
@@ -156,6 +164,7 @@ def family_size_scat():
 
 ### Graph data on a map
 def income_map():
+    #create a choropleth map with a color scale to show median family income
     income = px.choropleth(
         cost_piv,
         geojson=counties,
@@ -173,6 +182,8 @@ def income_map():
 
 ### Graph data on a map
 def cost_map(final):
+        #create a choropleth map with a color scale to show total cost for a 2parent 1 child family
+
     cost_piv = pd.pivot_table(
         final,
         index=["county", "state_y", "median_family_income"],
@@ -189,9 +200,8 @@ def cost_map(final):
     )
 
     cost_piv["income_cost_diff"] = cost_piv["median_family_income"] - cost_piv["2p1c"]
-    
-    # path_to_df = pkg_resources.resource_filename('countyPackage', 'Data/vcounty.csv')
-    fips_df = pd.read_csv(path_to_df, dtype={"county_fips": str})
+    #path_to_df = pkg_resources.resource_filename('countyPackage', 'Data/vcounty.csv')
+    fips_df = pd.read_csv('Data/vcounty.csv', dtype={"county_fips": str})
     fips_df.state = fips_df.state.str.title()
 
     cost_piv = pd.merge(
@@ -220,6 +230,8 @@ def cost_map(final):
 
 ### Graph data on a map
 def income_cost_diff_map():
+    #create a choropleth map with a color scale to show the difference in Median family income and cost for a 2parent 1 child family
+
     diff = px.choropleth(
         cost_piv,
         geojson=counties,
@@ -235,6 +247,8 @@ def income_cost_diff_map():
     diff.show()
 
 def Republican_map():
+    #create a choropleth map with a color scale to show the amount of Republican votes in each county
+
     voting_fig = px.choropleth(
         fips_df,
         geojson=counties,
@@ -250,6 +264,7 @@ def Republican_map():
     voting_fig.show()
 
 def vote_map():
+    #create a choropleth map with a color scale to show total number of votes cast in each county
     fig2 = px.choropleth(
         fips_df,
         geojson=counties,
@@ -266,6 +281,8 @@ def vote_map():
 
 
 def unemployement_map():
+    #create a choropleth map with a color scale to show unemployment rates in each county
+
     unemp_chart = px.choropleth(unemployment, geojson=counties, locations='fips', color='unemp',
                             color_continuous_scale="Viridis",
                             range_color=(0, 12),

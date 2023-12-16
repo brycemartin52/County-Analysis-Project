@@ -2,7 +2,7 @@
 Does a basic analysis on the combined data frame.
 Note: must be run after 'clean_data.py' & 'merge_data.py'
 """
-
+#Create a linear regression model for the data and return the output
 if __name__ == "__main__":
 
     import pandas as pd 
@@ -13,4 +13,4 @@ if __name__ == "__main__":
         #path_to_final_df = pkg_resources.resource_filename('countyPackage', "../Data/countyVLivEdu.csv")
         #data = pd.read_csv(path_to_final_df)
         mod = smf.ols("total_cost ~ median_family_income + family_member_count : median_family_income + DEMOCRAT + REPUBLICAN + noHS + HS + someCol + Col", data=data).fit()
-        mod.summary()
+        return mod.summary()
