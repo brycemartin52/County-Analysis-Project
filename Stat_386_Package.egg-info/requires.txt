@@ -1,0 +1,11 @@
+alabaster
+beautifulsoup4
+pandas
+numpy
+uszipcode
+urllib3
+statsmodels
+seaborn
+plotly
+matplotlib
+pkg_resources
