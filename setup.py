@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="countyPackage",
-    version='0.0.222',
+    version='0.0.2221',
     packages=find_packages(),
     description="A package to aid county-level analysis on cost of living, voting, and other variables",
     author="Michael Miceli & Bryce Martin",
