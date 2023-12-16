@@ -6,7 +6,7 @@ This repository contains the data used in analysis, images produced, and the mod
 Install in the terminal with: pip install git+https://github.com/brycemartin52/county_package.git
 
 Documentation is stored here:
-#####
+https://brycemartin52.github.io/county_package/
 
 Data sources:
 US Cost of Living Dataset (1877 Counties) - Data extracted from the Economic Policy Institute Family Budget Calculator: https://www.kaggle.com/datasets/asaniczka/us-cost-of-living-dataset-3171-counties/data
