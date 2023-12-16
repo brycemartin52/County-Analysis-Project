@@ -11,11 +11,11 @@ def county():
 
 
     # Reading the data into dataframes
-    path_to_vote = pkg_resources.resource_filename('county_package', 'Data/countypres_2000-2020.csv')
-    vote = pd.read_csv(path_to_vote)
-    path_to_cost = pkg_resources.resource_filename('county_package', 'Data/cost_of_living_us.csv')
+    #path_to_vote = pkg_resources.resource_filename('county_package', 'Data/countypres_2000-2020.csv')
+    vote = pd.read_csv('Data/countypres_2000-2020.csv')
+    #path_to_cost = pkg_resources.resource_filename('county_package', 'Data/cost_of_living_us.csv')
     
-    cost = pd.read_csv(path_to_cost)
+    cost = pd.read_csv('Data/cost_of_living_us.csv')
 
     vote = vote[vote.year == 2020]
 
