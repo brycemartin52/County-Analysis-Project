@@ -9,16 +9,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
 import json
-# import pkg_resources
 from urllib.request import urlopen
 import pkg_resources
+
 
 # Reading in necessary dataframes
 with urlopen(
     "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json"
 ) as response:
     counties = json.load(response)
-
 
 
 unemployment = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv", dtype={"fips": str})
@@ -31,45 +30,6 @@ fips_df = pd.read_csv(path_to_df, dtype={"county_fips": str})
 # Read the csv
 path_to_final_df = pkg_resources.resource_filename('countyPackage', "../Data/countyVLivEdu.csv")
 final = pd.read_csv(path_to_final_df)
-def plurality(row):
-    """
-    Plurality documentation
-    """
-    # Calculate percentage for each column
-    percentages = row / row.sum() * 100
-    # Get the party with the highest percentage
-    return percentages.idxmax()
-
-
-# Create a new column containing the most voted party for each row
-final["most_voted_party"] = final[
-    ["REPUBLICAN", "DEMOCRAT", "LIBERTARIAN", "GREEN", "OTHER"]
-].apply(plurality, axis=1)
-
-final["common_education"] = final[["noHS", "HS", "someCol", "Col"]].apply(
-    plurality, axis=1
-)
-
-
-# data[data['common_education'] == 'noHS']
-final["most_voted_party"].value_counts()
-final["common_education"].value_counts()
-# data
-
-def stat_sum():
-    final.agg(
-    {
-        "total_cost": ["min", "max", "median", "mean"],
-        "median_family_income": ["min", "max", "median", "mean"],
-        "REPUBLICAN": ["min", "max", "median", "mean"],
-        "DEMOCRAT": ["min", "max", "median", "mean"],
-        "noHS": ["min", "max", "median", "mean"],
-        "HS": ["min", "max", "median", "mean"],
-        "someCol": ["min", "max", "median", "mean"],
-        "Col": ["min", "max", "median", "mean"],
-    }
-    )
-
 
 cost_piv = pd.pivot_table(
     final,
@@ -126,6 +86,44 @@ housing_piv = pd.merge(
     right_on=["county_name", "state"],
     how="inner",
 )
+
+# data[data['common_education'] == 'noHS']
+final["most_voted_party"].value_counts()
+final["common_education"].value_counts()
+
+def plurality(row):
+    """
+    Plurality documentation
+    """
+    # Calculate percentage for each column
+    percentages = row / row.sum() * 100
+    # Get the party with the highest percentage
+    return percentages.idxmax()
+
+# Create a new column containing the most voted party for each row
+final["most_voted_party"] = final[
+    ["REPUBLICAN", "DEMOCRAT", "LIBERTARIAN", "GREEN", "OTHER"]
+].apply(plurality, axis=1)
+
+final["common_education"] = final[["noHS", "HS", "someCol", "Col"]].apply(
+    plurality, axis=1
+)
+
+
+def stat_sum():
+    final.agg(
+    {
+        "total_cost": ["min", "max", "median", "mean"],
+        "median_family_income": ["min", "max", "median", "mean"],
+        "REPUBLICAN": ["min", "max", "median", "mean"],
+        "DEMOCRAT": ["min", "max", "median", "mean"],
+        "noHS": ["min", "max", "median", "mean"],
+        "HS": ["min", "max", "median", "mean"],
+        "someCol": ["min", "max", "median", "mean"],
+        "Col": ["min", "max", "median", "mean"],
+    }
+    )
+
 
 
 
