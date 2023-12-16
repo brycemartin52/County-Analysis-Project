@@ -22,13 +22,15 @@ with urlopen(
 
 unemployment = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv", dtype={"fips": str})
 
-path_to_df = pkg_resources.resource_filename('countyPackage', 'Data/vcounty.csv')
+path_to_df = "Data/vcounty.csv"
+# path_to_df = pkg_resources.resource_filename('county_package', 'Data/vcounty.csv')
 fips_df = pd.read_csv(path_to_df, dtype={"county_fips": str})
 
 
 # Tidying portion of clean_data.py
 # Read the csv
-path_to_final_df = pkg_resources.resource_filename('countyPackage', "Data/countyVLivEdu.csv")
+path_to_final_df = "Data/countyVLivEdu.csv"
+# path_to_final_df = pkg_resources.resource_filename('county_package', "Data/countyVLivEdu.csv")
 final = pd.read_csv(path_to_final_df)
 
 cost_piv = pd.pivot_table(
@@ -187,7 +189,8 @@ def cost_map(final):
     )
 
     cost_piv["income_cost_diff"] = cost_piv["median_family_income"] - cost_piv["2p1c"]
-    path_to_df = pkg_resources.resource_filename('countyPackage', 'Data/vcounty.csv')
+    
+    # path_to_df = pkg_resources.resource_filename('countyPackage', 'Data/vcounty.csv')
     fips_df = pd.read_csv(path_to_df, dtype={"county_fips": str})
     fips_df.state = fips_df.state.str.title()
 
@@ -271,3 +274,6 @@ def unemployement_map():
                             )
     unemp_chart.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     unemp_chart.show()
+
+
+cost_map(final)
