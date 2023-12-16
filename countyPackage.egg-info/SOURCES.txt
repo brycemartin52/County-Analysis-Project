@@ -1,6 +1,7 @@
 LICENSE
 README.md
 setup.py
+Data/__init__.py
 countyPackage.egg-info/PKG-INFO
 countyPackage.egg-info/SOURCES.txt
 countyPackage.egg-info/dependency_links.txt
