@@ -77,9 +77,9 @@ def county():
     vcounty.Abv = vcounty.Abv.str.strip()
     vcounty.county_name = vcounty.county_name.str.strip()
 
-    vcounty.to_csv("../Data/vcounty.csv")
+    vcounty.to_csv("Data/vcounty.csv")
 
-    edu = pd.read_excel("../Data/Education.xlsx", header=3)
+    edu = pd.read_excel("Data/Education.xlsx", header=3)
 
     edu = edu[edu["State"] != "PR"]
 
@@ -125,7 +125,7 @@ def county():
 
 
     # Write the final csv
-    final.to_csv("../Data/countyVLivEdu.csv")
+    final.to_csv("Data/countyVLivEdu.csv")
     return final
     # cost_piv.to_csv("../Data/cost_piv.csv")
     # housing_piv.to_csv("../Data/housing_piv.csv")
