@@ -103,7 +103,6 @@ merge1.county = merge1.county.str.replace(" County", " ")
 merge1.county = merge1.county.str.replace(" Parish", " ")
 merge1.county = merge1.county.str.strip()
 
-merge1.to_csv("../Data/merge1.csv")
 
 
 # Final merge
