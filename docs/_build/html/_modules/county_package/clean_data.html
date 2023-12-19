@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>county_package.clean_data &mdash; Stat-386-Package 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Stat-386-Package
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../my_markdown.html">County Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">county_package package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Stat-386-Package</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">county_package.clean_data</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for county_package.clean_data</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This script  cleans up the county voting, education, and cost of living data sets</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1">## Import the necessary packages</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
+<div class="viewcode-block" id="county">
+<a class="viewcode-back" href="../../county_package.html#county_package.clean_data.county">[docs]</a>
+<span class="k">def</span> <span class="nf">county</span><span class="p">():</span>
+
+
+    <span class="c1"># Reading the data into dataframes</span>
+    <span class="c1">#path_to_vote = pkg_resources.resource_filename(&#39;county_package&#39;, &#39;Data/countypres_2000-2020.csv&#39;)</span>
+    <span class="n">vote</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Data/countypres_2000-2020.csv&#39;</span><span class="p">)</span>
+    <span class="c1">#path_to_cost = pkg_resources.resource_filename(&#39;county_package&#39;, &#39;Data/cost_of_living_us.csv&#39;)</span>
+    
+    <span class="n">cost</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Data/cost_of_living_us.csv&#39;</span><span class="p">)</span>
+
+    <span class="n">vote</span> <span class="o">=</span> <span class="n">vote</span><span class="p">[</span><span class="n">vote</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">2020</span><span class="p">]</span>
+
+    <span class="c1"># Creating the voting groupby object</span>
+    <span class="n">vote</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">vote</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;county_name&quot;</span><span class="p">,</span> <span class="s2">&quot;county_fips&quot;</span><span class="p">,</span> <span class="s2">&quot;party&quot;</span><span class="p">,</span> <span class="s2">&quot;totalvotes&quot;</span><span class="p">]</span>
+    <span class="p">)[</span><span class="s2">&quot;candidatevotes&quot;</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="n">vcounty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+        <span class="n">vote</span><span class="p">,</span>
+        <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;county_name&quot;</span><span class="p">,</span> <span class="s2">&quot;totalvotes&quot;</span><span class="p">,</span> <span class="s2">&quot;county_fips&quot;</span><span class="p">],</span>
+        <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;party&quot;</span><span class="p">,</span>
+        <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;candidatevotes&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">vcounty</span> <span class="o">=</span> <span class="n">vcounty</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;county_fips&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;county_fips&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">)</span>
+    <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;county_fips&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;county_fips&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="k">else</span> <span class="n">x</span>
+    <span class="p">)</span>
+    <span class="n">vcounty</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;fips&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;county_fips&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+    <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;DEMOCRAT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;DEMOCRAT&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;totalvotes&quot;</span><span class="p">]</span>
+    <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;GREEN&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;GREEN&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;totalvotes&quot;</span><span class="p">]</span>
+    <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;LIBERTARIAN&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;LIBERTARIAN&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;totalvotes&quot;</span><span class="p">]</span>
+    <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;OTHER&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;OTHER&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;totalvotes&quot;</span><span class="p">]</span>
+    <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;REPUBLICAN&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;REPUBLICAN&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">vcounty</span><span class="p">[</span><span class="s2">&quot;totalvotes&quot;</span><span class="p">]</span>
+
+    <span class="n">vcounty</span> <span class="o">=</span> <span class="n">vcounty</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span> <span class="k">else</span> <span class="n">s</span><span class="p">)</span>
+
+    <span class="n">vcounty</span> <span class="o">=</span> <span class="n">vcounty</span><span class="p">[</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;state&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;county_name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;totalvotes&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;DEMOCRAT&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;GREEN&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LIBERTARIAN&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;OTHER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;REPUBLICAN&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;county_fips&quot;</span>
+        <span class="p">]</span>
+    <span class="p">]</span>
+
+    <span class="c1"># State Abbreviation</span>
+    <span class="n">path_to_abs</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s1">&#39;county_package&#39;</span><span class="p">,</span> <span class="s2">&quot;Data/StateAbbvs.csv&quot;</span><span class="p">)</span>
+    <span class="nb">abs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_to_abs</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="nb">abs</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;State&quot;</span><span class="p">,</span> <span class="s2">&quot;Abv&quot;</span><span class="p">]</span>
+    <span class="nb">abs</span><span class="o">.</span><span class="n">State</span> <span class="o">=</span> <span class="nb">abs</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+
+    <span class="nb">abs</span>
+
+    <span class="n">vcounty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">vcounty</span><span class="p">,</span> <span class="nb">abs</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s2">&quot;State&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+
+    <span class="n">vcounty</span><span class="o">.</span><span class="n">Abv</span> <span class="o">=</span> <span class="n">vcounty</span><span class="o">.</span><span class="n">Abv</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">vcounty</span><span class="o">.</span><span class="n">county_name</span> <span class="o">=</span> <span class="n">vcounty</span><span class="o">.</span><span class="n">county_name</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="n">vcounty</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;Data/vcounty.csv&quot;</span><span class="p">)</span>
+
+    <span class="n">edu</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;Data/Education.xlsx&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">edu</span> <span class="o">=</span> <span class="n">edu</span><span class="p">[</span><span class="n">edu</span><span class="p">[</span><span class="s2">&quot;State&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;PR&quot;</span><span class="p">]</span>
+
+    <span class="n">edu</span> <span class="o">=</span> <span class="n">edu</span><span class="p">[</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;State&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Area name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Percent of adults with less than a high school diploma, 2017-21&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Percent of adults with a high school diploma only, 2017-21&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Percent of adults completing some college or associate&#39;s degree, 2017-21&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Percent of adults with a bachelor&#39;s degree or higher, 2017-21&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">]</span>
+    <span class="n">edu</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;State&quot;</span><span class="p">,</span> <span class="s2">&quot;county_name&quot;</span><span class="p">,</span> <span class="s2">&quot;noHS&quot;</span><span class="p">,</span> <span class="s2">&quot;HS&quot;</span><span class="p">,</span> <span class="s2">&quot;someCol&quot;</span><span class="p">,</span> <span class="s2">&quot;Col&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Read the kaggle data</span>
+    <span class="n">path_to_kag</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s1">&#39;county_package&#39;</span><span class="p">,</span> <span class="s2">&quot;Data/cost_of_living_us.csv&quot;</span><span class="p">)</span>
+    <span class="n">kag</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_to_kag</span><span class="p">)</span>
+    <span class="c1">#kag</span>
+
+    <span class="c1"># Merge the data</span>
+    <span class="n">merge1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+        <span class="n">kag</span><span class="p">,</span>
+        <span class="n">edu</span><span class="p">,</span>
+        <span class="n">left_on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;county&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">],</span>
+        <span class="n">right_on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;county_name&quot;</span><span class="p">,</span> <span class="s2">&quot;State&quot;</span><span class="p">],</span>
+        <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">,</span>
+    <span class="p">)</span>   
+    <span class="n">merge1</span> <span class="o">=</span> <span class="n">merge1</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;State&quot;</span><span class="p">,</span> <span class="s2">&quot;county_name&quot;</span><span class="p">])</span>
+    <span class="n">merge1</span><span class="o">.</span><span class="n">county</span> <span class="o">=</span> <span class="n">merge1</span><span class="o">.</span><span class="n">county</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; County&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+    <span class="n">merge1</span><span class="o">.</span><span class="n">county</span> <span class="o">=</span> <span class="n">merge1</span><span class="o">.</span><span class="n">county</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; Parish&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+    <span class="n">merge1</span><span class="o">.</span><span class="n">county</span> <span class="o">=</span> <span class="n">merge1</span><span class="o">.</span><span class="n">county</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+
+    <span class="c1"># Final merge</span>
+    <span class="n">final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+        <span class="n">merge1</span><span class="p">,</span>
+        <span class="n">vcounty</span><span class="p">,</span>
+        <span class="n">left_on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;county&quot;</span><span class="p">],</span>
+        <span class="n">right_on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Abv&quot;</span><span class="p">,</span> <span class="s2">&quot;county_name&quot;</span><span class="p">],</span>
+        <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+    <span class="c1"># Write the final csv</span>
+    <span class="n">final</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;Data/countyVLivEdu.csv&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">final</span></div>
+
+    <span class="c1"># cost_piv.to_csv(&quot;Data/cost_piv.csv&quot;)</span>
+    <span class="c1"># housing_piv.to_csv(&quot;Data/housing_piv.csv&quot;)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Michael Miceli &amp; Bryce Martin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
